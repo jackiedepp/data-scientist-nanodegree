@@ -87,17 +87,17 @@ def Network(drop_p, hidden_layer_size, output_size, class_to_idx, arch='densenet
     # load a pre-trained model: densenet121
     if (arch == 'densenet121'):
         model = models.densenet121(pretrained=True)
+        input_size = model.classifier.in_features
     elif (arch == 'vgg16'):
         model = models.vgg16(pretrained=True) 
+        input_size = model.classifier[0].in_features
     else:
         model = models.densenet121(pretrained=True)        
-    #model.to('cpu')
+        input_size = model.classifier.in_features
     
     # Freeze parameters so we don't backprop through them
     for param in model.parameters():
         param.requires_grad = False
-        
-    input_size = model.classifier.in_features
     
     classifier = feed_farwrd(input_size, hidden_layer_size, output_size, drop_p)
     

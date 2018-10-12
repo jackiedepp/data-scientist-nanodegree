@@ -20,11 +20,18 @@ def get_args(argv=None):
 if __name__ == '__main__':
     # get arguments
     args = get_args(sys.argv[1:])
-    print(args)
-    device = 'cpu'
+    print('--> arguments: {}'.format(args))
+
+    # config cpu or gpu mode
     if args.gpu:
-        device = 'cuda'
-    #print(device)
+        if torch.cuda.is_available():
+            device = 'cuda'
+        else:
+            print("----> Note: gpu mode is not available, change to cpu mode")
+            device = 'cpu'
+    else:
+        device = 'cpu'
+    print('--> Config mode: {}'.format(device))
     
     # Label mapping 
     if not isfile(args.category_names):
