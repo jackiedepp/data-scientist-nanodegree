@@ -32,7 +32,6 @@ def clean_data(df):
     Returns:
         df: the dataframe cleaned
     '''
-    
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand=True)
     
@@ -79,7 +78,7 @@ def save_data(df, database_filename):
     '''
     
     engine = create_engine('sqlite:///' + database_filename)
-    df.to_sql('InsertTableName', engine, index=False)  
+    df.to_sql('InsertTableName', engine, index=False, if_exists='replace')  
 
 
 def main():
